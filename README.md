@@ -25,7 +25,7 @@
 3. node 按照演算法回傳 response 給 load balancer
 4. load balancer 回傳 response
 
-比賽期間，我們開了 1 台 VM 跑 load balancer還開了 11 台 VM 跑 backend node，但實際上應該不需要那麼多。
+比賽期間，我們開了 1 台 VM 跑 load balancer 還開了 11 台 VM 跑 backend node，但實際上應該不需要那麼多。
 
 ## Usage
 
