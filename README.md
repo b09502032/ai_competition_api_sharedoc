@@ -140,4 +140,5 @@ The API calls `classify(image)` to classify an image.
 
   - the name of the classifier
   - the module's state_dict
-  - the classes of 
+  - the label information
+  - any other stuff required for classifying an image
