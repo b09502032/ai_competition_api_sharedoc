@@ -49,7 +49,7 @@ If `--training-data-dic /path/to/training data dic.txt` is specified, prediction
 
 Additional arguments will be passed as gunicorn settings (bind, threads, timeout, etc.).
 
-If not specified, captain email, salt, and other gunicorn settings will be loaded from [`config.py`](src/config.py).
+If not specified, captain email, salt, and other gunicorn settings will be loaded from [`config.py`](config.py).
 
 Example:
 
@@ -73,7 +73,7 @@ If `--max-workers` is not specified, it will be 4 * number_of_netlocs.
 
 Additional arguments will be passed as gunicorn settings (bind, threads, timeout, etc.).
 
-If not specified, netlocs and other gunicorn settings will be loaded from [`config.py`](src/config.py).
+If not specified, netlocs and other gunicorn settings will be loaded from [`config.py`](config.py).
 
 Example:
 
