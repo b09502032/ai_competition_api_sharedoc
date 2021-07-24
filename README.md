@@ -1,10 +1,6 @@
 # 你，識字嗎？ api server 架構分享
 
-這是我們這隊玉山人工智慧挑戰賽2021夏季賽【:dizzy:最佳API服務獎】的說明文件，主要關注 API 的部分，關於模型訓練請參考 [BruceJian43/TBrain2021-Chinese-Character-Recognition](https://github.com/BruceJian43/TBrain2021-Chinese-Character-Recognition)。
-
-## 設計理念
-
-我們用 Flask 建立 application，並用 gunicorn 部署。為了以 ensemble 提高變準確度，但又維持 throughput，我們設計了 load balancer，分配 request 給不同機器運算。
+這是我們這隊玉山人工智慧挑戰賽2021夏季賽【:dizzy:最佳API服務獎】的說明文件。
 
 ## 架構
 
@@ -19,13 +15,6 @@
 #### 系統架構圖
 
 ![structure](structure.svg)
-
-1. load balancer 收到 request
-2. load balancer 分配 request 給其他 node
-3. node 按照演算法回傳 response 給 load balancer
-4. load balancer 回傳 response
-
-比賽期間，我們開了 1 台 VM 跑 load balancer 還開了 11 台 VM 跑 backend node，但實際上應該不需要那麼多。
 
 ## Usage
 
@@ -91,56 +80,3 @@ Example:
 ```bash
 python3 balance.py --netloc ADDRESS1 ADDRESS2 --bind '0.0.0.0:44966' --threads 120
 ```
-
-# Classifier
-
-因為不同模型可能有不同運作方式，所以我們設計了一個分類器的架構，讓 API 能自己獨立並維持系統性。
-
-#### CLASS classifiers.Classifier
-
-Base class of a classifer.
-
-The API does the following procedure to initialize the classifer.
-
-```python
-state_dict = torch.load(f, map_location='cpu')
-classifier = getattr(classifers, state_dict['name'])()
-classifier.load_state_dict(state_dict)
-```
-
-The API calls `classify(image)` to classify an image.
-
-- `classify(image)`
-
-  Recognize the text content in the image.
-
-  - Parameters
-
-    image (numpy.ndarray) – the single image to predict
-
-  - Returns
-
-    the prediction of the image
-
-  - Return type
-
-    string
-
-- `load_state_dict(state_dict)`
-
-  Set up the classifier here.
-
-  - Parameters
-
-    state_dict (dict) – a dict containing the things required for setting up.
-
-- `state_dict()`
-
-  Returns a dictionary containing a whole state of the classifier.
-
-  Generally you should include the following in the dictionary:
-
-  - the name of the classifier
-  - the module's state_dict
-  - the label information
-  - any other stuff required for classifying an image
